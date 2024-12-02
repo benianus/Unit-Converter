@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Unit Converter</string>
+    <string name="length">Length</string>
+    <string name="weight">Weight</string>
+    <string name="temperature">Temperature</string>
+    <string name="convert_button">Convert</string>
+    <string name="enter_the_length_to_convert">Enter the length to convert</string>
+    <string name="unit_to_convert_from">Unit to convert from</string>
+    <string name="unit_to_convert_to">Unit to convert to</string>
+    <string name="enter_the_weight_to_convert">Enter the Weight to convert</string>
+    <string name="enter_the_temperature_to_convert">Enter the Temperature to convert</string>
+    <string name="result_of_your_calculation">Result of your calculation</string>
+</resources>
