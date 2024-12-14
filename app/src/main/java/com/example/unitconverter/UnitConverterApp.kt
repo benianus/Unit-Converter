@@ -14,19 +14,12 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.unitconverter.ui.theme.UnitConverterViewModel
-import com.example.unitconverter.ui.theme.screens.LengthScreen
-import com.example.unitconverter.ui.theme.screens.TemperatureScreen
-import com.example.unitconverter.ui.theme.screens.WeightScreen
-import com.example.unitconverter.ui.theme.theme.UnitConverterTheme
+import com.example.unitconverter.ui.theme.screens.ConversionScreen
 
 @Composable
 fun UnitConverterApp(
@@ -50,23 +43,24 @@ fun UnitConverterApp(
         )
 
         if (uiState.isShowingLengthPage) {
-            LengthScreen(
-
+            ConversionScreen(
+                actualScreenName = stringResource(R.string.enter_the_length_to_convert)
             )
             viewModel.lengthButtonClicked()
         } else if (uiState.isShowingWeightPage) {
-            WeightScreen(
-
+            ConversionScreen(
+                actualScreenName = stringResource(R.string.enter_the_weight_to_convert)
             )
             viewModel.weightButtonClicked()
         } else {
-            TemperatureScreen(
-
+            ConversionScreen(
+                stringResource(R.string.enter_the_temperature_to_convert)
             )
             viewModel.temperatureButtonClicked()
         }
     }
 }
+
 
 @Composable
 private fun ConvertUnitsBar(
@@ -80,114 +74,57 @@ private fun ConvertUnitsBar(
         modifier = modifier
             .padding(16.dp)
     ) {
-        LengthButton(
-            viewModel = viewModel,
-            isLengthButtonClicked = isLengthButtonClicked
+        ConversionButton(
+            unitName = stringResource(R.string.length),
+            onClick = { viewModel.showingLengthPage() },
+            isButtonClicked = isLengthButtonClicked,
+            modifier = Modifier.weight(1f)
         )
         Spacer(
             modifier = Modifier
                 .width(16.dp)
         )
-        WeightButton(
-            viewModel = viewModel,
-            isWeightButtonClicked = isWeightButtonClicked
+        ConversionButton(
+            unitName = stringResource(R.string.weight),
+            onClick = { viewModel.showingWeightPage() },
+            isButtonClicked = isWeightButtonClicked,
+            modifier = Modifier.weight(1f)
         )
         Spacer(
             modifier = Modifier
                 .width(16.dp)
         )
-        TemperatureButton(
-            viewModel,
-            modifier = Modifier.weight(1f),
-            isTemperatureButtonClicked = isTemperatureButtonClicked
+        ConversionButton(
+            unitName = stringResource(R.string.temperature),
+            onClick = { viewModel.showingTemperaturePage() },
+            isButtonClicked = isTemperatureButtonClicked,
+            modifier = Modifier.weight(1f)
         )
     }
 }
 
 @Composable
-private fun TemperatureButton(
-    viewModel: UnitConverterViewModel,
+private fun ConversionButton(
+    unitName: String,
+    onClick: () -> Unit,
     modifier: Modifier = Modifier,
-    isTemperatureButtonClicked: Boolean = false
+    isButtonClicked: Boolean = true
 ) {
-    if (isTemperatureButtonClicked) {
+    if (isButtonClicked) {
         OutlinedButton(
-            onClick = {
-                viewModel.showingTemperaturePage()
-            },
+            onClick = onClick
+        ) {
+            Text(
+                text = unitName
+            )
+        }
+    } else {
+        Button(
+            onClick = onClick,
             modifier = modifier
         ) {
             Text(
-                text = stringResource(R.string.temperature)
-            )
-        }
-    } else {
-        Button(
-            onClick = {
-                viewModel.showingTemperaturePage()
-            },
-            modifier = modifier
-        ) {
-            Text(
-                text = stringResource(R.string.temperature)
-            )
-        }
-    }
-}
-
-@Composable
-private fun WeightButton(
-    viewModel: UnitConverterViewModel,
-    modifier: Modifier = Modifier,
-    isWeightButtonClicked: Boolean = false
-) {
-    if (isWeightButtonClicked) {
-        OutlinedButton(
-            onClick = {
-                viewModel.showingWeightPage()
-            },
-        ) {
-            Text(
-                text = stringResource(R.string.weight)
-            )
-        }
-    } else {
-        Button(
-            onClick = {
-                viewModel.showingWeightPage()
-            },
-        ) {
-            Text(
-                text = stringResource(R.string.weight)
-            )
-        }
-    }
-}
-
-@Composable
-private fun LengthButton(
-    viewModel: UnitConverterViewModel,
-    modifier: Modifier = Modifier,
-    isLengthButtonClicked: Boolean = true
-) {
-    if (isLengthButtonClicked) {
-        OutlinedButton(
-            onClick = {
-                viewModel.showingLengthPage()
-            },
-        ) {
-            Text(
-                text = stringResource(R.string.length)
-            )
-        }
-    } else {
-        Button(
-            onClick = {
-                viewModel.showingLengthPage()
-            },
-        ) {
-            Text(
-                text = stringResource(R.string.length)
+                text = unitName
             )
         }
     }
@@ -206,12 +143,4 @@ private fun UnitConverterTopAppBar(
             )
         }
     )
-}
-
-@Preview
-@Composable
-fun ConvertUintBarPreview() {
-    UnitConverterTheme {
-
-    }
 }
