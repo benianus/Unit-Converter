@@ -10,4 +10,5 @@
     <string name="enter_the_weight_to_convert">Enter the Weight to convert</string>
     <string name="enter_the_temperature_to_convert">Enter the Temperature to convert</string>
     <string name="result_of_your_calculation">Result of your calculation</string>
+    <string name="clear">Clear</string>
 </resources>

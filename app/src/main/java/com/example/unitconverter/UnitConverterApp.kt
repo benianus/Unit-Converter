@@ -18,6 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.unitconverter.ui.theme.UnitConverterUiState
 import com.example.unitconverter.ui.theme.UnitConverterViewModel
 import com.example.unitconverter.ui.theme.screens.ConversionScreen
 
@@ -37,17 +38,15 @@ fun UnitConverterApp(
             viewModel = viewModel,
             modifier = Modifier
                 .padding(it),
-            isLengthButtonClicked = uiState.isLengthButtonClicked,
-            isWeightButtonClicked = uiState.isWeightButtonClicked,
-            isTemperatureButtonClicked = uiState.isTemperatureButtonClicked
+            uiState = uiState
         )
 
-        if (uiState.isShowingLengthPage) {
+        if (uiState.isLengthButtonClicked) {
             ConversionScreen(
                 actualScreenName = stringResource(R.string.enter_the_length_to_convert)
             )
             viewModel.lengthButtonClicked()
-        } else if (uiState.isShowingWeightPage) {
+        } else if (uiState.isWeightButtonClicked) {
             ConversionScreen(
                 actualScreenName = stringResource(R.string.enter_the_weight_to_convert)
             )
@@ -66,9 +65,7 @@ fun UnitConverterApp(
 private fun ConvertUnitsBar(
     viewModel: UnitConverterViewModel,
     modifier: Modifier = Modifier,
-    isLengthButtonClicked: Boolean = true,
-    isWeightButtonClicked: Boolean = false,
-    isTemperatureButtonClicked: Boolean = false
+    uiState: UnitConverterUiState
 ) {
     Row(
         modifier = modifier
@@ -76,8 +73,8 @@ private fun ConvertUnitsBar(
     ) {
         ConversionButton(
             unitName = stringResource(R.string.length),
-            onClick = { viewModel.showingLengthPage() },
-            isButtonClicked = isLengthButtonClicked,
+            onClick = { viewModel.lengthButtonClicked() },
+            isButtonClicked = uiState.isLengthButtonClicked,
             modifier = Modifier.weight(1f)
         )
         Spacer(
@@ -86,8 +83,8 @@ private fun ConvertUnitsBar(
         )
         ConversionButton(
             unitName = stringResource(R.string.weight),
-            onClick = { viewModel.showingWeightPage() },
-            isButtonClicked = isWeightButtonClicked,
+            onClick = { viewModel.weightButtonClicked() },
+            isButtonClicked = uiState.isWeightButtonClicked,
             modifier = Modifier.weight(1f)
         )
         Spacer(
@@ -96,8 +93,8 @@ private fun ConvertUnitsBar(
         )
         ConversionButton(
             unitName = stringResource(R.string.temperature),
-            onClick = { viewModel.showingTemperaturePage() },
-            isButtonClicked = isTemperatureButtonClicked,
+            onClick = { viewModel.temperatureButtonClicked() },
+            isButtonClicked = uiState.isTemperatureButtonClicked,
             modifier = Modifier.weight(1f)
         )
     }
