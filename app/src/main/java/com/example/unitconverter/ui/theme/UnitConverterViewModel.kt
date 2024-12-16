@@ -87,11 +87,7 @@ class UnitConverterViewModel : ViewModel() {
 
     @SuppressLint("DefaultLocale")
     private fun convertFormLengthTo() {
-        if (_uiState.value.unitToConvertFrom.toLowerCase() == Length.CENTIMETRE.name &&
-            _uiState.value.unitToConvertTo == Length.MILLIMETRE.name
-        ) {
-            FromCentimetreToMillimetre()
-        }
+
     }
 
     private fun convertFromWeightTo() {
