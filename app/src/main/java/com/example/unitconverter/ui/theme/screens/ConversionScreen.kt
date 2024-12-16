@@ -22,9 +22,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.unitconverter.R
+import com.example.unitconverter.ui.theme.UnitConverterUiState
+import com.example.unitconverter.ui.theme.UnitConverterViewModel
 
 @Composable
 fun ConversionScreen(
+    uiState: UnitConverterUiState,
+    viewModel: UnitConverterViewModel,
     actualScreenName: String,
     modifier: Modifier = Modifier
 ) {
@@ -35,25 +39,33 @@ fun ConversionScreen(
         verticalArrangement = Arrangement.Center
     ) {
         FieldAndText(
+            value = uiState.valueToConvert,
+            getValue = viewModel::getValueToConvert,
             fieldText = actualScreenName
         )
         FieldAndText(
+            value = uiState.unitToConvertFrom,
+            getValue = viewModel::getUnitToConvertFrom,
             fieldText = stringResource(R.string.unit_to_convert_from)
         )
         FieldAndText(
+            value = uiState.unitToConvertTo,
+            getValue = viewModel::getUnitToConvertTo,
             fieldText = stringResource(R.string.unit_to_convert_to)
         )
         Row {
+            // convert button
             Button(
-                onClick = {},
+                onClick = { viewModel.convert() },
             ) {
                 Text(
                     text = stringResource(R.string.convert_button)
                 )
             }
             Spacer(modifier.width(16.dp))
+            // clear button
             Button(
-                onClick = {},
+                onClick = { viewModel.clearFields() },
             ) {
                 Text(
                     text = stringResource(R.string.clear)
@@ -65,9 +77,10 @@ fun ConversionScreen(
 
 @Composable
 fun FieldAndText(
+    value: String,
+    getValue: (String) -> Unit,
     fieldText: String
 ) {
-    var value by rememberSaveable() { mutableStateOf("") }
 
     Text(
         text = fieldText,
@@ -76,9 +89,10 @@ fun FieldAndText(
     Spacer(modifier = Modifier.height(16.dp))
     TextField(
         value = value,
-        onValueChange = { value = it},
+        onValueChange = { getValue(it) },
         modifier = Modifier
-            .fillMaxWidth()
+            .fillMaxWidth(),
+        singleLine = true
     )
     Spacer(modifier = Modifier.height(16.dp))
 }

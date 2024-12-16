@@ -1,5 +1,6 @@
 package com.example.unitconverter.ui.theme
 
+import android.annotation.SuppressLint
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -40,11 +41,64 @@ class UnitConverterViewModel : ViewModel() {
         }
     }
 
-    fun reset() {
+    fun getValueToConvert(valueToConvert: String) {
         _uiState.update {
             it.copy(
-
+                valueToConvert = valueToConvert,
             )
         }
+    }
+
+    fun getUnitToConvertFrom(toConvertFrom: String) {
+        _uiState.update {
+            it.copy(
+                unitToConvertFrom = toConvertFrom
+            )
+        }
+    }
+
+    fun getUnitToConvertTo(toConvertTo: String) {
+        _uiState.update {
+            it.copy(
+                unitToConvertTo = toConvertTo
+            )
+        }
+    }
+
+    fun clearFields() {
+        _uiState.update {
+            it.copy(
+                valueToConvert = "",
+                unitToConvertFrom = "",
+                unitToConvertTo = ""
+            )
+        }
+    }
+
+    fun convert() {
+        if (_uiState.value.isLengthButtonClicked) {
+            convertFormLengthTo()
+        } else if (_uiState.value.isWeightButtonClicked) {
+            convertFromWeightTo()
+        } else {
+            convertFromTemperatureTo()
+        }
+    }
+
+    @SuppressLint("DefaultLocale")
+    private fun convertFormLengthTo() {
+        if (_uiState.value.unitToConvertFrom.toLowerCase() == Length.CENTIMETRE.name &&
+            _uiState.value.unitToConvertTo == Length.MILLIMETRE.name
+        ) {
+            FromCentimetreToMillimetre()
+        }
+    }
+
+    private fun convertFromWeightTo() {
+
+    }
+
+    private fun convertFromTemperatureTo() {
+
     }
 }
