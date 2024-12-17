@@ -4,7 +4,9 @@ data class UnitConverterUiState(
     val isLengthButtonClicked: Boolean = true,
     val isWeightButtonClicked: Boolean = false,
     val isTemperatureButtonClicked: Boolean = false,
+    val isConvertButtonClicked: Boolean = false,
     val valueToConvert: String = "",
     val unitToConvertFrom: String = "",
-    val unitToConvertTo: String = ""
+    val unitToConvertTo: String = "",
+    val result: String = ""
 )
