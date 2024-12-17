@@ -15,12 +15,15 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.compose.rememberNavController
 import com.example.unitconverter.R
 import com.example.unitconverter.ui.theme.UnitConverterUiState
 import com.example.unitconverter.ui.theme.UnitConverterViewModel
@@ -30,8 +33,9 @@ fun ConversionScreen(
     uiState: UnitConverterUiState,
     viewModel: UnitConverterViewModel,
     actualScreenName: String,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -56,7 +60,10 @@ fun ConversionScreen(
         Row {
             // convert button
             Button(
-                onClick = { viewModel.convert() },
+                onClick = {
+                    viewModel.convertButtonClicked()
+                    viewModel.convert()
+                },
             ) {
                 Text(
                     text = stringResource(R.string.convert_button)
@@ -65,7 +72,9 @@ fun ConversionScreen(
             Spacer(modifier.width(16.dp))
             // clear button
             Button(
-                onClick = { viewModel.clearFields() },
+                onClick = {
+                    viewModel.clearFields()
+                },
             ) {
                 Text(
                     text = stringResource(R.string.clear)

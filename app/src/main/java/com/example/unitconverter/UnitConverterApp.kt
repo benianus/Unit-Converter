@@ -23,10 +23,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.compose.rememberNavController
 import com.example.unitconverter.ui.theme.Length
 import com.example.unitconverter.ui.theme.UnitConverterUiState
 import com.example.unitconverter.ui.theme.UnitConverterViewModel
 import com.example.unitconverter.ui.theme.screens.ConversionScreen
+import com.example.unitconverter.ui.theme.screens.ResultScreen
+import com.example.unitconverter.ui.theme.screens.Screens
 
 @Composable
 fun UnitConverterApp(
@@ -40,6 +46,7 @@ fun UnitConverterApp(
             UnitConverterTopAppBar()
         }
     ) {
+
         LazyColumn(
             state = rememberLazyListState()
         ) {
@@ -50,35 +57,39 @@ fun UnitConverterApp(
                         .padding(it),
                     uiState = uiState
                 )
-
-                if (uiState.isLengthButtonClicked) {
-                    ConversionScreen(
+                if(uiState.isConvertButtonClicked) {
+                    ResultScreen(
                         uiState = uiState,
-                        viewModel = viewModel,
-                        actualScreenName = stringResource(R.string.enter_the_length_to_convert)
+                        viewModel = viewModel
                     )
-                    viewModel.lengthButtonClicked()
-                } else if (uiState.isWeightButtonClicked) {
-                    ConversionScreen(
-                        uiState = uiState,
-                        viewModel = viewModel,
-                        actualScreenName = stringResource(R.string.enter_the_weight_to_convert)
-                    )
-                    viewModel.weightButtonClicked()
                 } else {
-                    ConversionScreen(
-                        uiState = uiState,
-                        viewModel = viewModel,
-                        stringResource(R.string.enter_the_temperature_to_convert)
-                    )
-                    viewModel.temperatureButtonClicked()
+                    if (uiState.isLengthButtonClicked) {
+                        ConversionScreen(
+                            uiState = uiState,
+                            viewModel = viewModel,
+                            actualScreenName = stringResource(R.string.enter_the_length_to_convert)
+                        )
+                    } else if (uiState.isWeightButtonClicked) {
+                        ConversionScreen(
+                            uiState = uiState,
+                            viewModel = viewModel,
+                            actualScreenName = stringResource(R.string.enter_the_weight_to_convert)
+                        )
+                    } else {
+                        ConversionScreen(
+                            uiState = uiState,
+                            viewModel = viewModel,
+                            actualScreenName = stringResource(R.string.enter_the_temperature_to_convert)
+                        )
+                    }
                 }
             }
         }
 
+
+
     }
 }
-
 
 @Composable
 private fun ConvertUnitsBar(

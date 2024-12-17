@@ -17,14 +17,14 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.unitconverter.R
+import com.example.unitconverter.ui.theme.UnitConverterUiState
+import com.example.unitconverter.ui.theme.UnitConverterViewModel
 
 @Composable
 fun ResultScreen(
+    viewModel: UnitConverterViewModel,
+    uiState: UnitConverterUiState,
     modifier: Modifier = Modifier,
-    resultUnit: String = "ft",
-    convertedUnit: String = "cm",
-    valueConverted: Int = 29,
-    result: Int = 609
 ) {
     Column(
         modifier = Modifier
@@ -39,12 +39,16 @@ fun ResultScreen(
         )
         Spacer(Modifier.height(16.dp))
         Text(
-            text = "$valueConverted $convertedUnit = $result $resultUnit",
+            text = "${uiState.valueToConvert} ${uiState.unitToConvertFrom} =" +
+                    " ${uiState.result} ${uiState.unitToConvertTo}",
             style = MaterialTheme.typography.displayMedium
         )
         Spacer(Modifier.height(16.dp))
         Button(
-            onClick = {}
+            onClick = {
+                viewModel.reset()
+                viewModel.clearFields()
+            }
         ) {
             Text(text = "Reset")
         }
@@ -54,7 +58,5 @@ fun ResultScreen(
 @Preview(showSystemUi = true, showBackground = true)
 @Composable
 fun ResultScreenPreview() {
-    Scaffold {
-        ResultScreen(modifier = Modifier.padding(it))
-    }
+
 }
