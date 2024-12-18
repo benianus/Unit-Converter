@@ -153,6 +153,50 @@ class UnitConverterViewModel : ViewModel() {
         }
     }
 
+    private fun convertWeightFromTo() {
+        val unitToFrom = _uiState.value.unitToConvertFrom
+        when (unitToFrom) {
+            Weight.MILLIGRAM.unit -> {
+                fromMilligramTo()
+            }
+
+            Weight.GRAM.unit -> {
+                fromGramTo()
+            }
+
+            Weight.KILOGRAM.unit -> {
+                fromKilogramTo()
+            }
+
+            Weight.OUNCE.unit -> {
+                fromOunceTo()
+            }
+
+            else -> {
+                fromPoundTo()
+            }
+        }
+    }
+
+    private fun convertTemperatureFromTo() {
+        val unitToFrom = _uiState.value.unitToConvertFrom
+        when (unitToFrom) {
+            Temperature.KELVIN.unit -> {}
+            Temperature.CELSIUS.unit -> {}
+            else -> {}
+        }
+    }
+
+    private fun fromMilligramTo() {}
+    private fun fromGramTo() {}
+    private fun fromKilogramTo() {}
+    private fun fromOunceTo() {}
+    private fun fromPoundTo() {}
+
+    private fun fromKelvinTo() {}
+    private fun fromCelsiusTo() {}
+    private fun fromFahrenheitTo() {}
+
     private fun fromCentimeterTo() {
         val unitToTo = _uiState.value.unitToConvertTo
         when (unitToTo) {
@@ -580,13 +624,66 @@ class UnitConverterViewModel : ViewModel() {
         }
     }
 
-    private fun fromMileTo() {}
+    private fun fromMileTo() {
+        val unitToTo = _uiState.value.unitToConvertTo
+        when (unitToTo) {
+            Length.MILLIMETRE.unit -> {
+                _uiState.update {
+                    it.copy(
+                        result = (_uiState.value.valueToConvert.toDouble() * 1.609e6).toString()
+                    )
+                }
+            }
 
-    private fun convertWeightFromTo() {
+            Length.CENTIMETRE.unit -> {
+                _uiState.update {
+                    it.copy(
+                        result = (_uiState.value.valueToConvert.toDouble() * 160900).toString()
+                    )
+                }
+            }
 
+            Length.METER.unit -> {
+                _uiState.update {
+                    it.copy(
+                        result = (_uiState.value.valueToConvert.toDouble() * 1609).toString()
+                    )
+                }
+            }
+
+            Length.KILOMETRE.unit -> {
+                _uiState.update {
+                    it.copy(
+                        result = (_uiState.value.valueToConvert.toDouble() * 1.609).toString()
+                    )
+                }
+            }
+
+            Length.YARD.unit -> {
+                _uiState.update {
+                    it.copy(
+                        result = (_uiState.value.valueToConvert.toDouble() * 1760).toString()
+                    )
+                }
+            }
+
+            Length.INCH.unit -> {
+                _uiState.update {
+                    it.copy(
+                        result = (_uiState.value.valueToConvert.toDouble() * 63360).toString()
+                    )
+                }
+            }
+
+            else -> {
+                _uiState.update {
+                    it.copy(
+                        result = (_uiState.value.valueToConvert.toDouble() * 5280).toString()
+                    )
+                }
+            }
+        }
     }
 
-    private fun convertTemperatureFromTo() {
 
-    }
 }
