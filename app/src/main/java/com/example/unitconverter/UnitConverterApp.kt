@@ -1,8 +1,5 @@
 package com.example.unitconverter
 
-import androidx.compose.foundation.gestures.ScrollableState
-import androidx.compose.foundation.gestures.scrollable
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
@@ -23,16 +20,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.currentBackStackEntryAsState
-import androidx.navigation.compose.rememberNavController
-import com.example.unitconverter.ui.theme.Length
 import com.example.unitconverter.ui.theme.UnitConverterUiState
 import com.example.unitconverter.ui.theme.UnitConverterViewModel
 import com.example.unitconverter.ui.theme.screens.ConversionScreen
 import com.example.unitconverter.ui.theme.screens.ResultScreen
-import com.example.unitconverter.ui.theme.screens.Screens
 
 @Composable
 fun UnitConverterApp(
