@@ -9,21 +9,19 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.text.KeyboardActionScope
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.currentBackStackEntryAsState
-import androidx.navigation.compose.rememberNavController
 import com.example.unitconverter.R
 import com.example.unitconverter.ui.theme.UnitConverterUiState
 import com.example.unitconverter.ui.theme.UnitConverterViewModel
@@ -45,17 +43,25 @@ fun ConversionScreen(
         FieldAndText(
             value = uiState.valueToConvert,
             getValue = viewModel::getValueToConvert,
-            fieldText = actualScreenName
+            fieldText = actualScreenName,
+            imeAction = ImeAction.Next,
+            keyboardType = KeyboardType.Number
         )
         FieldAndText(
             value = uiState.unitToConvertFrom,
             getValue = viewModel::getUnitToConvertFrom,
-            fieldText = stringResource(R.string.unit_to_convert_from)
+            fieldText = stringResource(R.string.unit_to_convert_from),
+            imeAction = ImeAction.Next,
+            keyboardType = KeyboardType.Text
         )
         FieldAndText(
             value = uiState.unitToConvertTo,
             getValue = viewModel::getUnitToConvertTo,
-            fieldText = stringResource(R.string.unit_to_convert_to)
+            fieldText = stringResource(R.string.unit_to_convert_to),
+            imeAction = ImeAction.Next,
+            keyboardType = KeyboardType.Text,
+            onDone = { viewModel.convert() },
+            isDone = true
         )
         Row {
             // convert button
@@ -86,9 +92,13 @@ fun ConversionScreen(
 
 @Composable
 fun FieldAndText(
+    isDone: Boolean = false,
+    onDone: () -> Unit = {},
     value: String,
     getValue: (String) -> Unit,
-    fieldText: String
+    fieldText: String,
+    imeAction: ImeAction = ImeAction.Next,
+    keyboardType: KeyboardType = KeyboardType.Text
 ) {
 
     Text(
@@ -101,7 +111,14 @@ fun FieldAndText(
         onValueChange = { getValue(it) },
         modifier = Modifier
             .fillMaxWidth(),
-        singleLine = true
+        singleLine = true,
+        keyboardOptions = KeyboardOptions(
+            imeAction = imeAction,
+            keyboardType = keyboardType
+        ),
+        keyboardActions = KeyboardActions(
+            onDone = { if (isDone) onDone() else null }
+        )
     )
     Spacer(modifier = Modifier.height(16.dp))
 }
