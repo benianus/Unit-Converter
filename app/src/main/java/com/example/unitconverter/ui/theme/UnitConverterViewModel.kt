@@ -116,6 +116,7 @@ class UnitConverterViewModel : ViewModel() {
         }
     }
 
+    // Length conversion
     private fun convertLengthFromTo() {
         val unitToFrom = _uiState.value.unitToConvertFrom
         when (unitToFrom) {
@@ -153,6 +154,7 @@ class UnitConverterViewModel : ViewModel() {
         }
     }
 
+    // weight conversion
     private fun convertWeightFromTo() {
         val unitToFrom = _uiState.value.unitToConvertFrom
         when (unitToFrom) {
@@ -178,12 +180,21 @@ class UnitConverterViewModel : ViewModel() {
         }
     }
 
+    // Temperature conversion
     private fun convertTemperatureFromTo() {
         val unitToFrom = _uiState.value.unitToConvertFrom
         when (unitToFrom) {
-            Temperature.KELVIN.unit -> {}
-            Temperature.CELSIUS.unit -> {}
-            else -> {}
+            Temperature.KELVIN.unit -> {
+                fromKelvinTo()
+            }
+
+            Temperature.CELSIUS.unit -> {
+                fromCelsiusTo()
+            }
+
+            else -> {
+                fromFahrenheitTo()
+            }
         }
     }
 
