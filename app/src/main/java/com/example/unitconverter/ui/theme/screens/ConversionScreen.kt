@@ -100,7 +100,6 @@ fun FieldAndText(
     imeAction: ImeAction = ImeAction.Next,
     keyboardType: KeyboardType = KeyboardType.Text
 ) {
-
     Text(
         text = fieldText,
         style = MaterialTheme.typography.titleLarge
