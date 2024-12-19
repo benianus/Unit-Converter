@@ -116,7 +116,7 @@ fun FieldAndText(
             keyboardType = keyboardType
         ),
         keyboardActions = KeyboardActions(
-            onDone = { if (isDone) onDone() else null }
+            onDone = { if (isDone) onDone() }
         )
     )
     Spacer(modifier = Modifier.height(16.dp))
